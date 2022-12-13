@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   decrementByNumber,
@@ -8,19 +9,61 @@ import {
   signOut,
   displayOff,
   displayOn,
+  incrementHistoryList,
+  clearHistoryList,
+  clearCounter,
 } from "./actions";
 import "./App.css";
 
 function App() {
+  const [historyElement, setHistoryElement] = useState();
+
   const counter = useSelector((state) => state.counterReducer.counter);
   const numberOfEvents = useSelector(
     (state) => state.counterReducer.numberOfEvents
   );
   const isLogged = useSelector((state) => state.loggingReducer.isLogged);
   const isDisplayed = useSelector((state) => state.counterReducer.isDisplayed);
+  const historyList = useSelector((state) => state.historyReducer.historyList);
   const dispatch = useDispatch();
 
-  console.log(isDisplayed);
+  useEffect(() => {
+    if (!!historyElement) {
+      console.log(historyElement);
+      dispatch(incrementHistoryList(historyElement));
+    }
+  }, [dispatch, historyElement, numberOfEvents]);
+
+  const handleIncrementByNumber = (number) => {
+    dispatch(incrementByNumber(number));
+    setHistoryElement(number);
+  };
+
+  const handleDecrementByNumber = (number) => {
+    dispatch(decrementByNumber(number));
+    setHistoryElement(-number);
+  };
+
+  const handleIncrementOne = () => {
+    dispatch(incrementOne());
+    setHistoryElement(1);
+  };
+
+  const handleDecrementOne = () => {
+    dispatch(decrementOne());
+    setHistoryElement(-1);
+  };
+
+  const handleClearHistoryList = () => {
+    dispatch(clearHistoryList());
+    setHistoryElement(null);
+  };
+
+  const handleClearAll = () => {
+    setHistoryElement(null);
+    dispatch(clearHistoryList());
+    dispatch(clearCounter());
+  };
 
   return (
     <div className="App">
@@ -29,25 +72,65 @@ function App() {
 
         {isDisplayed && (
           <>
-            <h3>Number of events: {numberOfEvents}</h3>
-            <h3>Counter: {counter}</h3>
-            <button onClick={() => dispatch(incrementOne())}>+</button>
-            <button onClick={() => dispatch(decrementOne())}>-</button>
-            <button onClick={() => dispatch(incrementByNumber(5))}>+5</button>
-            <button onClick={() => dispatch(decrementByNumber(3))}>-3</button>
-
-            <button onClick={() => dispatch(displayOff())}>Display Off</button>
+            {!!historyList.length ? (
+              <p>History: {historyList.join(",")}</p>
+            ) : (
+              <p>No History to display...</p>
+            )}
+            {!!historyList.length && (
+              <button
+                className="button"
+                onClick={() => handleClearHistoryList()}
+              >
+                Clear history
+              </button>
+            )}
+            <p>Number of events: {numberOfEvents}</p>
+            <p>Counter: {counter}</p>
+            <button className="button" onClick={() => handleClearAll()}>
+              Clear All
+            </button>
+            <div>
+              <button
+                className="button"
+                onClick={() => handleIncrementByNumber(5)}
+              >
+                +5
+              </button>
+              <button className="button" onClick={() => handleIncrementOne()}>
+                +
+              </button>
+              <button className="button" onClick={() => handleDecrementOne()}>
+                -
+              </button>
+              <button
+                className="button"
+                onClick={() => handleDecrementByNumber(3)}
+              >
+                -3
+              </button>
+            </div>
+            <br />
+            <button className="button" onClick={() => dispatch(displayOff())}>
+              Display Off
+            </button>
           </>
         )}
         {!isDisplayed && (
-          <button onClick={() => dispatch(displayOn())}>Display On</button>
+          <button className="button" onClick={() => dispatch(displayOn())}>
+            Display On
+          </button>
         )}
         <br />
 
         {isLogged ? (
-          <button onClick={() => dispatch(signOut())}>Sign Out</button>
+          <button className="button" onClick={() => dispatch(signOut())}>
+            Sign Out
+          </button>
         ) : (
-          <button onClick={() => dispatch(signIn())}>Sign In</button>
+          <button className="button" onClick={() => dispatch(signIn())}>
+            Sign In
+          </button>
         )}
 
         {isLogged ? (

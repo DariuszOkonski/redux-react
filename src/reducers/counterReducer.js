@@ -5,6 +5,7 @@ import {
   INCREMENT_ONE,
   DISPLAY_ON,
   DISPLAY_OFF,
+  CLEAR_COUNTER,
 } from "../constants";
 
 const counterState = {
@@ -15,6 +16,12 @@ const counterState = {
 
 const counterReducer = (state = counterState, action) => {
   switch (action.type) {
+    case CLEAR_COUNTER:
+      return {
+        ...state,
+        counter: 0,
+        numberOfEvents: 0,
+      };
     case INCREMENT_ONE:
       return {
         ...state,
