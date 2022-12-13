@@ -29,7 +29,6 @@ function App() {
 
   useEffect(() => {
     if (!!historyElement) {
-      console.log(historyElement);
       dispatch(incrementHistoryList(historyElement));
     }
   }, [dispatch, historyElement, numberOfEvents]);
