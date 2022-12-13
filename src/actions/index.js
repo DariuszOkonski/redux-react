@@ -1,14 +1,16 @@
 import { DECREMENT, INCREMENT, SIGN_IN, SIGN_OUT } from "../constants";
 
-export const increment = () => {
+export const increment = (number) => {
   return {
     type: INCREMENT,
+    payload: number,
   };
 };
 
-export const decrement = () => {
+export const decrement = (number) => {
   return {
     type: DECREMENT,
+    payload: number,
   };
 };
 

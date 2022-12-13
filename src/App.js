@@ -12,8 +12,8 @@ function App() {
       <header className="App-header">
         <h2>Redux Practice</h2>
         <h3>Counter: {counter}</h3>
-        <button onClick={() => dispatch(increment())}>+</button>
-        <button onClick={() => dispatch(decrement())}>-</button>
+        <button onClick={() => dispatch(increment(5))}>+</button>
+        <button onClick={() => dispatch(decrement(3))}>-</button>
 
         <br />
 
