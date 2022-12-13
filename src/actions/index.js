@@ -1,29 +1,60 @@
-import { DECREMENT, INCREMENT, SIGN_IN, SIGN_OUT } from "../constants";
-
-export const increment = (number) => {
-  return {
-    type: INCREMENT,
-    payload: number,
-  };
-};
-
-export const decrement = (number) => {
-  return {
-    type: DECREMENT,
-    payload: number,
-  };
-};
+import {
+  DECREMENT_BY_NUMBER,
+  DECREMENT_ONE,
+  DISPLAY_OFF,
+  DISPLAY_ON,
+  INCREMENT_BY_NUMBER,
+  INCREMENT_ONE,
+  SIGN_IN,
+  SIGN_OUT,
+} from "../constants";
 
 export const signIn = () => {
   return {
     type: SIGN_IN,
-    payload: true,
   };
 };
 
-export const sighOut = () => {
+export const signOut = () => {
   return {
     type: SIGN_OUT,
-    payload: false,
+  };
+};
+
+export const incrementOne = () => {
+  return {
+    type: INCREMENT_ONE,
+  };
+};
+
+export const decrementOne = () => {
+  return {
+    type: DECREMENT_ONE,
+  };
+};
+
+export const incrementByNumber = (number) => {
+  return {
+    type: INCREMENT_BY_NUMBER,
+    payload: number,
+  };
+};
+
+export const decrementByNumber = (number) => {
+  return {
+    type: DECREMENT_BY_NUMBER,
+    payload: number,
+  };
+};
+
+export const displayOn = () => {
+  return {
+    type: DISPLAY_ON,
+  };
+};
+
+export const displayOff = () => {
+  return {
+    type: DISPLAY_OFF,
   };
 };
